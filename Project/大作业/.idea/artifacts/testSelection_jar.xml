@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact name="testSelection:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/testSelection_jar</output-path>
+    <root id="root">
+      <element id="archive" name="testSelection.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="testSelection" />
+      </element>
+      <element id="library" level="project" name="com.ibm.wala:com.ibm.wala.cast:1.5.4" />
+    </root>
+  </artifact>
+</component>

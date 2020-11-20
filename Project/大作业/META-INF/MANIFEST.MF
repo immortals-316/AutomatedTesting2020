@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Main-Class: MyWala
+Class-Path: com.ibm.wala.cast-1.5.4.jar com.ibm.wala.core-1.5.4.jar comm
+ ons-io-2.4.jar com.ibm.wala.shrike-1.5.4.jar com.ibm.wala.util-1.5.4.ja
+ r
+
