@@ -24,7 +24,7 @@ public class MyWala {
     static Map<String, Set<String>> methodMap;
     static Map<String, Set<String>> classMethodMap;
     static Map<String, ShrikeBTMethod> BTMethodMap;
-    static String command;
+    static String type;
     static String project_target;
     static String change_info_path;
 
@@ -32,9 +32,12 @@ public class MyWala {
 
 
     public static void main(String[] args) throws IOException, ClassHierarchyException, InvalidClassFileException, CancelException {
-        command = "-m";
-        project_target = "C:\\Users\\lenovo\\Desktop\\study\\大三上\\自动化\\ClassicAutomatedTesting\\ClassicAutomatedTesting\\5-MoreTriangle\\target";
-        change_info_path = "C:\\Users\\lenovo\\Desktop\\study\\大三上\\自动化\\Data\\5-MoreTriangle\\change_info.txt";
+//        type = "-m";
+//        project_target = "C:\\Users\\lenovo\\Desktop\\study\\大三上\\自动化\\ClassicAutomatedTesting\\ClassicAutomatedTesting\\5-MoreTriangle\\target";
+//        change_info_path = "C:\\Users\\lenovo\\Desktop\\study\\大三上\\自动化\\Data\\5-MoreTriangle\\change_info.txt";
+        type=args[0];
+        project_target=args[1];
+        change_info_path=args[2];
         MyWala t=new MyWala();
         try {
             t.initialize();
@@ -42,10 +45,10 @@ public class MyWala {
             e.printStackTrace();
             System.exit(0);
         }
-        if (command.equals("-c")) {//类选择
-            classSelect();
-        } else if (command.equals("-m")) {//方法选择
-            methodSelect();
+        if (type.equals("-c")) {//类选择
+            ByClass();
+        } else if (type.equals("-m")) {//方法选择
+            ByMethod();
         }
     }
     //完成整个构建过程
@@ -127,7 +130,7 @@ public class MyWala {
         }
         classMap.entrySet().removeIf(item -> item.getValue().isEmpty());
         methodMap.entrySet().removeIf(item -> item.getValue().isEmpty());
-        printToDot();
+        getDot();
 
     }
 
@@ -146,7 +149,7 @@ public class MyWala {
 
     }
 
-    public static void printToDot() {
+    public static void getDot() {
 
         try {
             BufferedWriter classOut = new BufferedWriter(new FileWriter("class-DataLog.dot"));
@@ -179,7 +182,7 @@ public class MyWala {
         }
     }
 
-    public static void classSelect() {
+    public static void ByClass() {
         Set<String> classChange = new HashSet<>();
         Set<String> methodChange = new HashSet<>();
 
@@ -201,7 +204,7 @@ public class MyWala {
             temps = new HashSet<>();
             for (String className : classChange) {
                 for (String classMethod : classMethodMap.get(className)) {
-                    recurPre(classMethod, methods);
+                    Rec(classMethod, methods);
                 }
             }
             for (String method : methods) {
@@ -214,7 +217,7 @@ public class MyWala {
 
     }
 
-    public static void methodSelect() {
+    public static void ByMethod() {
         Set<String> methodChange = new HashSet<>();
 
         try {
@@ -234,7 +237,7 @@ public class MyWala {
             Set<String> methods = new HashSet<>();
             temps = new HashSet<>();
             for (String methodName : methodChange) {
-                recurPre(methodName, methods);
+                Rec(methodName, methods);
             }
             for (String method : methods) {
                 methodSelectionOut.write(method + "\n");
@@ -245,7 +248,7 @@ public class MyWala {
         }
     }
 
-    public static void recurPre(String method, Set<String> methods) {
+    public static void Rec(String method, Set<String> methods) {
         if (!methodMap.containsKey(method)) {
             return;
         }
@@ -256,7 +259,7 @@ public class MyWala {
             if (methodMap.containsKey(methodName)) {
                 if (!temps.contains(methodName)) {
                     temps.add(methodName);
-                    recurPre(methodName, methods);
+                    Rec(methodName, methods);
                 }
             } else {
                 boolean flag = false;
@@ -280,9 +283,3 @@ public class MyWala {
 
     }
 }
-
-
-
-
-
-
